@@ -38,7 +38,7 @@ app.get('/youtube-live', async (req, res) => {
     res.json(data);
   } catch (error) {
     console.error('Error fetching YouTube data:', error);
-    res.status(500).send('Error fetching YouTube data');
+    res.status(500).json({ error: 'Error fetching YouTube data' });
   }
 });
 
