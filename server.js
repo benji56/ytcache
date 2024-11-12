@@ -2,9 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const NodeCache = require('node-cache');
+const cors = require('cors');
 
 // Initialize Express app and cache
 const app = express();
+app.use(cors({ origin: '*' })); // Enable CORS for all routes
+
 const cache = new NodeCache({ stdTTL: 300 }); // Cache TTL is set to 300 seconds (5 minutes)
 
 // Get environment variables
