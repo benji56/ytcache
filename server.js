@@ -8,7 +8,7 @@ const cors = require('cors');
 const app = express();
 app.use(cors({ origin: '*' })); // Enable CORS for all routes
 
-const cache = new NodeCache({ stdTTL: 300 }); // Cache TTL is set to 300 seconds (5 minutes)
+const cache = new NodeCache({ stdTTL: process.env.CACHE_TTL }); // Cache TTL is set to 300 seconds (5 minutes)
 
 // Get environment variables
 const channelId = process.env.CHANNEL_ID;
@@ -37,7 +37,7 @@ app.get('/youtube-live', async (req, res) => {
 
     // Cache the response data
     cache.set(cacheKey, data);
-
+    console.log(cacheKey + " cached")
     res.json(data);
   } catch (error) {
     console.error('Error fetching YouTube data:', error);
