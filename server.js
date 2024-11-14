@@ -36,7 +36,7 @@ cache.on('expired', (key, value) => {
 
 // Validate environment variables
 function validateEnvVariables() {
-  const requiredVars = ['CHANNEL_ID', 'API_KEY', 'CACHE_TTL'];
+  const requiredVars = ['CHANNEL_ID', 'API_KEY', 'CACHE_TTL', 'SHOW_SERVING'];
   const missingVars = requiredVars.filter((varName) => !process.env[varName]);
 
   if (missingVars.length > 0) {
@@ -50,6 +50,7 @@ validateEnvVariables();
 // Get environment variables
 const channelId = process.env.CHANNEL_ID;
 const apiKey = process.env.API_KEY;
+const showServing = process.env.SHOW_SERVING;
 
 const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${apiKey}`;
 
@@ -81,7 +82,9 @@ app.get('/youtube-live', async (req, res, next) => {
     const cachedData = cache.get(cacheKey);
 
     if (cachedData) {
-      logger.info('Serving data from cache');
+      if(showServing){
+        logger.info('Serving data from cache');
+      }
       res.set('Cache-Control', 'no-store');
       return res.json(cachedData);
     }
