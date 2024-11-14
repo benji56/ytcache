@@ -10,6 +10,9 @@ const logger = require('./logger'); // Winston importálása
 
 // Initialize Express app and cache
 const app = express();
+
+app.set('trust proxy', true);
+
 app.use(cors({ origin: '*' })); // Enable CORS for all routes
 app.use(helmet());
 app.use(compression());
