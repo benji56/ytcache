@@ -50,7 +50,7 @@ validateEnvVariables();
 // Get environment variables
 const channelId = process.env.CHANNEL_ID;
 const apiKey = process.env.API_KEY;
-const showServing = process.env.SHOW_SERVING;
+const showServing = process.env.SHOW_SERVING === 'true';
 
 const youtubeUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&eventType=live&type=video&key=${apiKey}`;
 
@@ -118,6 +118,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 3000;
 const server = app.listen(PORT, () => {
   logger.info(`Cache TTL ${cacheTTL}`);
+  logger.info(`Show Serving ${showServing}`);
   logger.info(`Server is running on port ${PORT}`);
 });
 
